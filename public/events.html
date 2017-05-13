@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en"  >
+  <head>
+		<base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="A collection of everything to do nearby. Tag your event tweets with #EVSTK to get included.">
+    <meta name="author" content="">
+    <link rel="icon" href="./../images/favicon.ico">
+
+		<title>EVSTK - tag your events with #EVSTK</title>
+
+    <!-- Bootstrap core CSS -->
+    	<!--link href="./../../node_modules/angular-material/angular-material.min.css" rel="stylesheet" -->
+		  <link href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.css" rel="stylesheet">
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+		<!-- TODC Bootstrap core CSS -->
+      <!--link href="./../css/todc-bootstrap.min.css" rel="stylesheet"-->
+  
+		<!-- SPELLS -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
+    <!--script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script--><!-- load angular -->
+    <!--script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.js"></script-->
+
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script><!-- load angular -->
+    <!--script src="./../../node_modules/angular/angular.js"></script--> 
+    <!--script src="./../../node_modules/angular-aria/angular-aria.js"></script--> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-aria.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.js"></script>
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-cookies.js"></script>
+ <scropt src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.4/angular-sanitize.js"></scropt>		
+  <!--script src="./../../node_modules/angular-animate/angular-animate.js"></script-->
+    <!--script src="./../../node_modules/angular-material/angular-material.js"></script--> 
+	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-route.js"></script><!-- load angular routes-->
+    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.js"></script-->
+		<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.2.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.0/ui-bootstrap-tpls.js"></script><!--load ui bootstrap -->
+		<script src="js/controllers/main.js"></script> <!-- load up our controller -->
+	  <script src="js/controllers/homecontroller.js"></script> <!-- load up our controller -->
+	<script src="js/services/todos.js"></script> <!-- load our todo service -->
+		<!--script src="js/services/geo.js"></script> <!-- load our todo service -->
+		<!--script src="js/indexRoutes.js"></script--> <!-- load our angular router -->
+		<script src="js/core.js"></script> <!-- load our main application -->
+    <script src="js/ngletteravatar.js"></script>
+		<script src="js/directives/taggedInfiniteScroll.js"></script><!-- infinite scroll directive -->
+		<!--script src="../node_modules/node-geocoder/lib/geocoder.js"></script><!-- infinite scroll directive -->
+
+<script src="js/lib/angulargrid.js"></script>
+
+		
+
+      <style>
+        .btn-custom, .btn-custom:hover, .btn-custom:active, .btn-custom:visited, .btn-custom:link {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            outline: 0 !important;
+            box-shadow:none;
+            border: 0;
+            background: transparent;
+            font-weight: 900;
+        }  
+          
+          .panel-custom {
+              height: 300px;
+          }
+          
+          .btn-join {
+              margin-right: 30px;
+          }
+          
+          .btn-group-custom {
+                margin-top: 10px;
+      }
+  
+       .btn-group  .dropdown-toggle-custom:hover {
+            -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0); */
+            box-shadow: 0 0px 0px rgba(0, 0, 0, 0); */
+        } 
+          
+         /** .navbar-classes {min-height: 60px; background-color: #2d87e2; color:#fff;}
+          .navbar-class {min-height: 60px; background-color: #2d87e2; color:#fff;} **/
+
+          body {
+                /**background-color: #e9eaec;**/
+                /**padding-top: 90px; **/
+								/**min-height: 100vh;**/
+            }  
+          
+          .glyphicon-lg {
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 6px;
+          }
+
+          .btn-custom-lg {
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 6px;
+          }
+          
+          .navbar-text-lg {
+            padding: 10px 0px;
+            margin-left: 0px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 6px;
+          }
+				   .modal {
+					    overflow-y: auto;
+					}
+				.modal-open {
+    				overflow:auto;
+    				overflow-x:hidden;
+				}
+.valign-center {
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+}
+.wi {
+  display: block;
+}
+				
+#floater {
+position:fixed;
+bottom: 20px;
+right:0px;
+height: 50px;
+background-color:#ffffff;
+z-index:999999;
+}
+				
+
+/**
+ * Helpers
+ */
+.border-tlr-radius { 
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px; 
+}
+
+.text-center { text-align: center; }
+
+.radius { border-radius: 2px; }
+
+.padding-tb { padding-top: 1.6rem; padding-bottom: 1.6rem;}
+
+.shadowDepth0 { box-shadow: 0 1px 3px rgba(0,0,0, 0.12); }
+
+.shadowDepth1 {
+   box-shadow: 
+  		0 1px 3px rgba(0,0,0, 0.12),
+    	0 1px 2px rgba(0,0,0, 0.24);      
+}
+			
+	@media only screen and (max-width: 700px) {
+    .hideOnMobile {
+        display: none;
+    }
+}
+		@media only screen and (min-width: 700px) {
+    .onlyOnMobile {
+        display: none;
+    }
+}
+  
+h4 a:link, h4 a:visited, h4 a:hover, h4 a:active {
+    text-decoration: none;
+}
+				
+/** corner banner ***/
+		.cr {
+  width: 100px;
+  padding-top: 40px;
+  position: absolute;
+  text-align: center;
+  color: #f0f0f0;
+}
+
+.cr-sticky {
+  position: fixed;
+}
+
+/* Positions */
+
+.cr-top    { top: -25px; }
+.cr-right  { right: -50px; }
+
+/* Rotations */
+.cr-top.cr-right,
+.cr-bottom.cr-left {
+  transform: rotate(45deg);
+}
+
+
+/* Colors */
+
+.cr-white     { background-color: #f0f0f0; color: #444; }
+.cr-black     { background-color: #333; }
+.cr-grey      { background-color: #999; }
+.cr-blue      { background-color: #39d; }
+.cr-green     { background-color: #2c7; }
+.cr-turquoise { background-color: #1b9; }
+.cr-purple    { background-color: #95b; }
+.cr-red       { background-color: #e43; }
+.cr-orange    { background-color: #e82; }
+.cr-yellow    { background-color: #ec0; }
+		
+				
+md-nav-bar .md-nav-bar { border-bottom:0;
+
+	</style>
+
+  </head>
+ 
+<body ng-app="evstk">
+<div ng-view style="height:100%"></div>
+	   <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script-->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-96933440-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+	
+	</body>
+</html>

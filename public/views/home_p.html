@@ -1,0 +1,402 @@
+<style>
+/* BOOTSTRAP 3.x GLOBAL STYLES
+-------------------------------------------------- */
+body, html {
+    height: 100%;
+    /*line-height: 1.8;*/
+}
+
+.jumbotron .h1, .jumbotron h1 {
+	font-size: inherit;
+	}
+
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+.navbar-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+  margin-bottom: 60px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 1;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  height: 400px;
+  background-color:#555;
+}
+.carousel img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 400px;
+}
+.bgimg-1 {
+    background-position: center;
+    background-size: cover;
+    background-image: url("./../images/boyny.jpg");
+    min-height: 100%;
+}
+.container-table {
+    display: table;
+}
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Pad the edges of the mobile views a bit */
+.marketing {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Center align the text within the three columns below the carousel */
+.marketing .col-lg-4 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.marketing h2 {
+  font-weight: normal;
+}
+.marketing .col-lg-4 p {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+/* Featurettes
+------------------------- */
+
+.featurette-divider {
+  margin: 80px 0; /* Space out the Bootstrap <hr> more */
+}
+.featurette {
+  padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
+  overflow: hidden; /* Vertically center images part 2: clear their floats. */
+}
+.featurette-image {
+  margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
+}
+
+/* Give some space on the sides of the floated elements so text doesn't run right into it. */
+.featurette-image.pull-left {
+  margin-right: 40px;
+}
+.featurette-image.pull-right {
+  margin-left: 40px;
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+  font-size: 50px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 768px) {
+
+  /* Remve the edge padding needed for mobile */
+  .marketing {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Navbar positioning foo */
+  .navbar-wrapper {
+    margin-top: 20px;
+    margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
+  }
+  /* The navbar becomes detached from the top, so we round the corners */
+  .navbar-wrapper .navbar {
+    border-radius: 4px;
+  }
+
+  /* Bump up size of carousel content */
+  .carousel-caption p {
+    margin-bottom: 20px;
+    font-size: 21px;
+    line-height: 1.4;
+  }
+
+}
+	.transparent{
+  background-color: transparent !important;
+}
+</style>
+
+
+
+
+	<!-- ANGULAR MATERIAL SIDENAV LEFT -->
+	<md-sidenav md-component-id="left" class="md-sidenav-left">
+		<md-toolbar>
+						<md-button style="margin-top:10px" ng-click="openLeftMenu()" class="md-icon-button" aria-label="close">
+				<md-icon class="material-icons">close</md-icon>
+			</md-button>
+		</md-toolbar>
+		<md-content>
+			<md-list flex>
+				<!--md-subheader class="md-no-sticky">3 line item (with hover)</md-subheader-->
+				<md-list-item class="md-2-line" ng-href="/">
+					<i class="material-icons md-avatar">home</i>
+					<div class="md-list-item-text" layout="column">
+						<h3>Home</h3></div>
+				</md-list-item>
+				<md-divider></md-divider>
+				<md-list-item class="md-2-line" ng-click="findMe();openLeftMenu();chosenCity='Near Me'">
+					<md-icon class="material-icons md-avatar">my_location</md-icon>
+					<div class="md-list-item-text" layout="column">
+						<h3>Near Me</h3></div>
+						</md-list-item>
+		<md-list-item class="md-2-line" ng-click="showLocations();openLeftMenu();">
+					<md-icon class="material-icons md-avatar">location_city</md-icon>
+					<div class="md-list-item-text" layout="column">
+						<h3>Change Metro</h3></div>
+				</md-list-item>
+					<md-divider></md-divider>
+			<md-subheader class="md-no-sticky" hide-gt-xs>Date</md-subheader>
+				<md-list-item hide-gt-xs>
+					<md-button style="margin-left:15px" ng-class="{ 'day-selected': chosenDay === 'Today', 'day-option' : chosenDay!== 'Today'  }" class=" md-small " ng-click="daySelected('Today');openLeftMenu();">TODAY</md-button>
+					<md-button style="" class="md-small" ng-click="daySelected('Tomorrow');openLeftMenu();" ng-class="{ 'day-selected': chosenDay === 'Tomorrow', 'day-option' : chosenDay!== 'Tomorrow'  }">TOMORROW</md-button>
+					<md-button style="" class="md-small" ng-click="daySelected('Weekend');openLeftMenu();" ng-class="{ 'day-selected': chosenDay === 'Weekend', 'day-option' : chosenDay!== 'Weekend'  }">WEEKEND</md-button>
+				</md-list-item>
+			<md-subheader class="md-no-sticky" hide-gt-xs>Filter</md-subheader>
+				<md-list-item hide-gt-xs>
+							<md-button style="margin-left:15px" class=" md-small" ng-click="filterTag('kids');openLeftMenu();" ng-class="tagCSS('kids')">KIDS</md-button>
+						<md-button style="" class=" md-small" ng-click="filterTag('nightlife');openLeftMenu();" ng-class="tagCSS('nightlife')">NIGHTLIFE</md-button>
+						<md-button style="" class=" md-small" ng-click="filterTag('health');openLeftMenu();" ng-class="tagCSS('health')">HEALTH</md-button>
+						<md-button style="" class=" md-small" ng-click="filterTag('music');openLeftMenu();" ng-class="tagCSS('music')">MUSIC</md-button>
+			</md-list-item>
+			<md-list-item hide-gt-xs>
+								<md-button style="margin-left:15px"  class="md-small" ng-click="filterTag('free');openLeftMenu();" ng-class="tagCSS('free')">FREE</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('dining');openLeftMenu();" ng-class="tagCSS('dining')">DINING</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('fashion');openLeftMenu();" ng-class="tagCSS('fashion')">FASHION</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('festivals');openLeftMenu();" ng-class="tagCSS('festivals')">FESTIVALS</md-button>
+				</md-list-item>
+					<md-list-item hide-gt-xs>
+								<md-button style="margin-left:15px"  class="md-small" ng-click="filterTag('performance');openLeftMenu();" ng-class="tagCSS('performance')">PERFORMANCE</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('art');openLeftMenu();" ng-class="tagCSS('art')">ART</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('book');openLeftMenu();" ng-class="tagCSS('book')">LECTURE</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('film');openLeftMenu();" ng-class="tagCSS('film')">FILM</md-button>
+											
+				</md-list-item>		
+
+
+			</md-list>
+		</md-content>
+	</md-sidenav>
+	<!--/sidenav-->
+
+
+<!-- Header
+================================================== -->
+   <div class="jumbotron bgimg-1 " style="padding-top:0; margin-top:0; height:100%">
+
+	<!-- ANGULAR MATERIAL toolbar -->
+	<md-toolbar class="transparent" style="padding-top:0; margin-top:0">
+		<div class="md-toolbar-tools">
+			<md-button ng-click="openLeftMenu()" class="md-icon-button" aria-label="Settings">
+				<md-icon class="material-icons">menu</md-icon>
+			</md-button>
+			<h1>
+          <a class="" ng-href="/" style="text-decoration:none; font-weight:bold; font-family: 'Raleway', sans-serif;font-size: 36px!important; ">eventstack</a>
+        </h1>
+
+
+			<span flex></span>
+
+			<!--md-button  hide-gt-xs class="md-raised  " aria-label="Filter" href="" ng-click="showFilters()" target="_self">Filters</md-button-->
+			<!--md-menu hide-gt-xs md-position-mode="target-right bottom" md-offset="0 10">
+				<md-button style="margin-right:10px" aria-label="" class="md-button" ng-click="openMenu($mdOpenMenu, $event)">
+					<md-icon class="material-icons wi">settings</md-icon>
+				</md-button>
+				<md-menu-content width="40">
+					<md-menu-item>
+						<md-button style="" ng-class="{ 'day-selected': chosenDay === 'Today', 'day-option-mobile' : chosenDay!== 'Today'  }" class=" md-small " ng-click="daySelected('Today')">TODAY</md-button>
+					</md-menu-item>
+					<md-menu-item>
+						<md-button style="" ng-class="{ 'day-selected': chosenDay === 'Tomorrow', 'day-option-mobile' : chosenDay!== 'Tomorrow'  }" class=" md-small " ng-click="daySelected('Tomorrow')">TOMORROW</md-button>
+					</md-menu-item>
+					<md-menu-item>
+						<md-button style="" ng-class="{ 'day-selected': chosenDay === 'Weekend', 'day-option-mobile' : chosenDay!== 'Weekend'  }" class=" md-small " ng-click="daySelected('Weekend')">WEEKEND</md-button>
+					</md-menu-item>
+
+					<md-menu-divider></md-menu-divider>
+					<md-menu-item>
+						<md-button style="" class=" md-small" ng-click="filterTag('kids')" ng-class="tagCSSmobile('kids')">KIDS</md-button>
+					</md-menu-item>
+					<md-menu-item>
+						<md-button style="" class="md-small" ng-click="filterTag('bars')" ng-class="tagCSSmobile('bars')">BARS</md-button>
+					</md-menu-item>
+					<md-menu-item>
+						<md-button style="" class="md-small" ng-click="filterTag('fitness')" ng-class="tagCSSmobile('fitness')">FITNESS</md-button>
+					</md-menu-item>
+					<md-menu-item>
+						<md-button style="" class=" md-small" ng-click="filterTag('music')" ng-class="tagCSSmobile('music')">MUSIC</md-button>
+					</md-menu-item>
+
+				</md-menu-content>
+			</md-menu-->
+
+
+
+
+			<span flex></span>
+
+        <md-button style="font-size:22px; color:white;margin-right:30px;">login</md-button>
+
+		</div>
+
+		<!-- /ANGULAR MATERIAL TOOLBAR -->
+	</md-toolbar>
+
+	
+        <div class="container container-table" style="height:100%">
+    <div class="row vertical-center-row">
+						        <div class="text-center col-md-8 col-md-offset-2" >
+
+											<h2 style="color:white; margin-bottom:15px">find something to do nearby</h2>
+
+										<md-card class="text-center" style="margin-bottom:30px;   text-align:center">
+
+						<md-card-content id="demo" class="" style=" margin-bottom: 0px; padding-bottom: 0px">
+							<md-input-container id="" class="md-block" flex-gt-xs style=" background-color:white;margin-top: 0px; margin-bottom:0px;  padding-bottom:0px">
+								<form id="searchForm2" ng-keyup="$event.keyCode == 13 && goSearch(searchTxt2)">
+									<div layout-gt-xs="row" style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+										<div style="font-weight:bold; font-size:20px; color:grey;padding-top:2px"> Near</div>
+										<md-input-container class="search" md-no-float class="md-block" flex style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+											<input size="3" style="border-bottom:none; font-size: 22px" type="text" id="searchBox2" placeholder="Madison, WI" ng-model="searchTxt2"  ng-model-options="{debounce : 600}">
+										</md-input-container>
+
+										<span style="color:grey"><md-button style="margin-bottom:20px;" class="md-icon-button" ng-click="goSearch(searchTxt2)"><i style="color:grey" class='material-icons'>search</i><md-tooltip md-direction="Bottom">change location</md-tooltip></md-button></span>
+									</div>
+								</form>
+							</md-input-container>
+											</md-card-content>
+						</md-card>
+
+					</div>
+					</div>
+		 </div>
+      </div>
+
+
+
+<!-- Marketing messaging and featurettes
+================================================== -->
+<!-- Wrap the rest of the page in another container to center all the content. -->
+
+<div class="container marketing">
+
+  <!-- Three columns of text below the carousel -->
+  <div class="row" style="margin-top:100px">
+    <div class="col-md-4 text-center">
+						<i class="material-icons" style="font-size:108px">hearing</i>
+      <h2>largest</h2>
+      <p>We're listening to everything</p>
+      <p>      <md-button class="md-raised md-primary">Primary</md-button></p>
+    </div>
+    <div class="col-md-4 text-center">						
+						<i class="material-icons" style="font-size:108px">location_city</i>
+      <h2>nearby</h2>
+      <p>See the closest activities first</p>
+      <p>      <md-button class="md-raised md-primary">Primary</md-button></p>
+    </div>
+    <div class="col-md-4 text-center">
+						<i class="material-icons" style="font-size:108px">language</i>
+      <h2>everywhere</h2>
+      <p>When you're on vacation or traveling, the same site works.</p>
+      <p>      <md-button class="md-raised md-primary">Primary</md-button></p>
+    </div>
+  </div><!-- /.row -->
+
+
+  <!-- START THE FEATURETTES -->
+
+  <hr class="featurette-divider">
+
+  <div class="featurette">
+    <img class="featurette-image img-circle pull-right" src="./../images/iphone.png">
+    <h2 class="featurette-heading">Everything.<span class="text-muted">To do.</span></h2>
+    <p class="lead">Find the closest trivia night, art exhibit, yoga class, kid events, street fest, farmers market, live music, poetry reading, happy hour, you name it, wherever you are.</p>
+        <p>      <md-button class="md-raised md-primary">Look</md-button></p>
+	</div>
+
+  <hr class="featurette-divider">
+
+  <div class="featurette">
+    <img class="featurette-image img-circle pull-left" src="./../images/laptop.png">
+    <h2 class="featurette-heading">Add your events. <span class="text-muted">Send us your twitter name.</span></h2>
+    <p class="lead">We're listening on twitter for dates.  To add your events, just as us to follow you and we'll automatically include your events.</p>
+         <p>      <md-button class="md-raised md-primary">Tell us</md-button></p>
+ </div>
+
+  <hr class="featurette-divider">
+
+  <div class="featurette">
+    <img class="featurette-image  pull-right" src="./../images/developer_laptop.png">
+    <h2 class="featurette-heading">Want our list.. <span class="text-muted">on your site?</span></h2>
+    <p class="lead">You can include our list of events, filtered by geography and category, on your site using our Partner API.</p>
+         <p>      <md-button class="md-raised md-primary">API</md-button></p>
+  </div>
+
+  <hr class="featurette-divider">
+
+  <!-- /END THE FEATURETTES -->
+
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="pull-right"><a href="#">Back to top</a></p>
+    <p>This Bootstrap layout is compliments of Bootply. · <a href="http://www.bootply.com/62603">Edit on Bootply.com</a></p>
+  </footer>
+
+</div><!-- /.container -->
+
+
+<script>
+/**  $(document).ready(function(){       
+   var scroll_start = 0;
+   var startchange = $('.coolbar');
+   var offset = startchange.offset();
+   $('.dynamic-color').css('color', 'white');
+
+   $(document).scroll(function() { 
+      scroll_start = $(this).scrollTop();
+      if(scroll_start > offset.top) {
+          $('.coolbar').css('background-color', 'white');
+          $('.dynamic-color').css('color', 'grey');
+      } else {
+          $('.coolbar').css('background-color', 'transparent');
+          $('.dynamic-color').css('color', 'white');
+       }
+   });
+}); 
+**/
+  </script>

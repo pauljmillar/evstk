@@ -1,0 +1,877 @@
+<div layout="column" style="background-color: #e9eaec;" flex>
+
+	<style>
+		.md-button.md-small {
+			min-width: 5%;
+			margin-left: 2px;
+			margin-right: 2px;
+		}
+		
+		.md-button.day-option {
+			background-color: rgba(158, 158, 158, 0.2);
+			color: black;
+		}
+		
+		.md-button.day-option-mobile {
+			background-color: none;
+			color: black;
+		}
+		
+		.md-button.day-selected {
+			background-color: rgb(255, 87, 34);
+			color: white;
+		}
+		
+		.md-button.day-selected:hover {
+			background-color: rgb(255, 87, 34);
+			color: white;
+		}
+		
+		.md-button.day-selected:focus {
+			background-color: rgb(255, 87, 34);
+			color: white;
+		}
+		
+		.md-button.day-option:hover {
+			background-color: rgb(255, 87, 34);
+			color: white;
+		}
+		
+		.mid {
+			position: fixed;
+			z-index: 999;
+			height: 2em;
+			width: 2em;
+			overflow: show;
+			margin: auto;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+		}
+		h1 a:hover {
+			color:white;
+		}
+	</style>
+
+
+	<!-- ANGULAR MATERIAL SIDENAV LEFT -->
+	<md-sidenav md-component-id="left" class="md-sidenav-left">
+		<md-toolbar>
+						<md-button style="margin-top:10px" ng-click="openLeftMenu()" class="md-icon-button" aria-label="close">
+				<md-icon class="material-icons">close</md-icon>
+			</md-button>
+		</md-toolbar>
+		<md-content>
+			<md-list flex>
+				<!--md-subheader class="md-no-sticky">3 line item (with hover)</md-subheader-->
+				<md-list-item class="md-2-line" ng-href="/">
+					<i class="material-icons md-avatar">home</i>
+					<div class="md-list-item-text" layout="column">
+						<h3>Home</h3></div>
+				</md-list-item>
+				<md-divider></md-divider>
+				<md-list-item class="md-2-line" ng-click="findMe();openLeftMenu();chosenCity='Near Me'">
+					<md-icon class="material-icons md-avatar">my_location</md-icon>
+					<div class="md-list-item-text" layout="column">
+						<h3>Near Me</h3></div>
+						</md-list-item>
+		<md-list-item class="md-2-line" ng-click="showLocations();openLeftMenu();">
+					<md-icon class="material-icons md-avatar">location_city</md-icon>
+					<div class="md-list-item-text" layout="column">
+						<h3>Change Metro</h3></div>
+				</md-list-item>
+					<md-divider></md-divider>
+			<md-subheader class="md-no-sticky" hide-gt-xs>Date</md-subheader>
+				<md-list-item hide-gt-xs>
+					<md-button style="margin-left:15px" ng-class="{ 'day-selected': chosenDay === 'Today', 'day-option' : chosenDay!== 'Today'  }" class=" md-small " ng-click="daySelected('Today');openLeftMenu();">TODAY</md-button>
+					<md-button style="" class="md-small" ng-click="daySelected('Tomorrow');openLeftMenu();" ng-class="{ 'day-selected': chosenDay === 'Tomorrow', 'day-option' : chosenDay!== 'Tomorrow'  }">TOMORROW</md-button>
+					<md-button style="" class="md-small" ng-click="daySelected('Weekend');openLeftMenu();" ng-class="{ 'day-selected': chosenDay === 'Weekend', 'day-option' : chosenDay!== 'Weekend'  }">WEEKEND</md-button>
+				</md-list-item>
+			<md-subheader class="md-no-sticky" hide-gt-xs>Filter</md-subheader>
+				<md-list-item hide-gt-xs>
+							<md-button style="margin-left:15px" class=" md-small" ng-click="filterTag('kids');openLeftMenu();" ng-class="tagCSS('kids')">KIDS</md-button>
+						<md-button style="" class=" md-small" ng-click="filterTag('nightlife');openLeftMenu();" ng-class="tagCSS('nightlife')">NIGHTLIFE</md-button>
+						<md-button style="" class=" md-small" ng-click="filterTag('health');openLeftMenu();" ng-class="tagCSS('health')">HEALTH</md-button>
+						<md-button style="" class=" md-small" ng-click="filterTag('music');openLeftMenu();" ng-class="tagCSS('music')">MUSIC</md-button>
+			</md-list-item>
+			<md-list-item hide-gt-xs>
+								<md-button style="margin-left:15px"  class="md-small" ng-click="filterTag('free');openLeftMenu();" ng-class="tagCSS('free')">FREE</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('dining');openLeftMenu();" ng-class="tagCSS('dining')">DINING</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('fashion');openLeftMenu();" ng-class="tagCSS('fashion')">FASHION</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('festivals');openLeftMenu();" ng-class="tagCSS('festivals')">FESTIVALS</md-button>
+				</md-list-item>
+					<md-list-item hide-gt-xs>
+								<md-button style="margin-left:15px"  class="md-small" ng-click="filterTag('performance');openLeftMenu();" ng-class="tagCSS('performance')">PERFORMANCE</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('art');openLeftMenu();" ng-class="tagCSS('art')">ART</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('book');openLeftMenu();" ng-class="tagCSS('book')">LECTURE</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('film');openLeftMenu();" ng-class="tagCSS('film')">FILM</md-button>
+											
+				</md-list-item>		
+
+
+			</md-list>
+		</md-content>
+	</md-sidenav>
+	<!--/sidenav-->
+
+
+
+	<!-- ANGULAR MATERIAL toolbar -->
+	<md-toolbar class="md-whiteframe-z1" style="position: fixed; z-index:1;">
+		<div class="md-toolbar-tools">
+			<md-button ng-click="openLeftMenu()" class="md-icon-button" aria-label="Settings">
+				<md-icon class="material-icons">menu</md-icon>
+			</md-button>
+			<h1>
+          <a class="" ng-href="/" style="text-decoration:none; font-weight:bold; font-family: 'Raleway', sans-serif;font-size: 36px!important; ">eventstack</a>
+        </h1>
+
+
+			<span flex></span>
+
+			<!--md-button  hide-gt-xs class="md-raised  " aria-label="Filter" href="" ng-click="showFilters()" target="_self">Filters</md-button-->
+			<!--md-menu hide-gt-xs md-position-mode="target-right bottom" md-offset="0 10">
+				<md-button style="margin-right:10px" aria-label="" class="md-button" ng-click="openMenu($mdOpenMenu, $event)">
+					<md-icon class="material-icons wi">settings</md-icon>
+				</md-button>
+				<md-menu-content width="40">
+					<md-menu-item>
+						<md-button style="" ng-class="{ 'day-selected': chosenDay === 'Today', 'day-option-mobile' : chosenDay!== 'Today'  }" class=" md-small " ng-click="daySelected('Today')">TODAY</md-button>
+					</md-menu-item>
+					<md-menu-item>
+						<md-button style="" ng-class="{ 'day-selected': chosenDay === 'Tomorrow', 'day-option-mobile' : chosenDay!== 'Tomorrow'  }" class=" md-small " ng-click="daySelected('Tomorrow')">TOMORROW</md-button>
+					</md-menu-item>
+					<md-menu-item>
+						<md-button style="" ng-class="{ 'day-selected': chosenDay === 'Weekend', 'day-option-mobile' : chosenDay!== 'Weekend'  }" class=" md-small " ng-click="daySelected('Weekend')">WEEKEND</md-button>
+					</md-menu-item>
+
+					<md-menu-divider></md-menu-divider>
+					<md-menu-item>
+						<md-button style="" class=" md-small" ng-click="filterTag('kids')" ng-class="tagCSSmobile('kids')">KIDS</md-button>
+					</md-menu-item>
+					<md-menu-item>
+						<md-button style="" class="md-small" ng-click="filterTag('bars')" ng-class="tagCSSmobile('bars')">BARS</md-button>
+					</md-menu-item>
+					<md-menu-item>
+						<md-button style="" class="md-small" ng-click="filterTag('fitness')" ng-class="tagCSSmobile('fitness')">FITNESS</md-button>
+					</md-menu-item>
+					<md-menu-item>
+						<md-button style="" class=" md-small" ng-click="filterTag('music')" ng-class="tagCSSmobile('music')">MUSIC</md-button>
+					</md-menu-item>
+
+				</md-menu-content>
+			</md-menu-->
+
+
+
+
+			<span flex></span>
+
+			<md-menu md-position-mode="target-right bottom" md-offset="0 10">
+				<md-button style="margin-right:10px" aria-label="Open phone interactions menu" class="md-button" ng-click="openMenu($mdOpenMenu, $event)">
+					{{ chosenCity }}<span class="caret"></span>
+				</md-button>
+				<md-menu-content width="40">
+					<md-menu-item ng-repeat="city in cityList">
+						<md-button ng-click="citySelected(city._id)">
+							{{ city._id }}
+						</md-button>
+					</md-menu-item>
+				</md-menu-content>
+			</md-menu>
+		</div>
+
+		<!-- /ANGULAR MATERIAL TOOLBAR -->
+
+
+	</md-toolbar>
+
+	<md-content flex class="" style="margin-top: 120px; background-color: #e9eaec;">
+
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+
+
+
+					<md-card hide-xs>
+						<md-card-content>
+							<h3 ng-show="eventList.length===50">{{ eventList.length }}+ <span style="font-size: 16px; font-color: grey;">events near </span>{{chosenCity==='Near Me' ? 'me' : chosenCity.split(',')[0]}}</h3>
+							<h3 ng-show="eventList.length!==50">{{ eventList.length }} <span style="font-size: 16px; font-color: grey;">events near </span>{{chosenCity==='Near Me' ? 'me' : chosenCity.split(',')[0]}}</h3>
+							<!--h3 ng-show="eventList.length!==50">{{ eventList.length }} <span style="font-size: 16px; font-color: grey;">events near </span>{{chosenCity.split(',')[0]}}</h3-->
+							<!--a href="" ng-click="showLocations()">&nbsp;See List of Metro Areas</a-->
+							<a ng-show="chosenCity !== 'Near Me'" href="" ng-click="chosenCity='Near Me';findMe();">Near Me</a>
+							<a ng-show="chosenCity === 'Near Me'"href="" ng-click="citySelected(metro);">&nbsp;Near {{metro}}</a>
+
+							<hr>
+							<div layout-gt-xs="row" layout-align="center center">
+								<md-button style="" ng-class="{ 'day-selected': chosenDay === 'Today', 'day-option' : chosenDay!== 'Today'  }" class=" md-small " ng-click="daySelected('Today')">TODAY</md-button>
+								<md-button style="" class="md-small" ng-click="daySelected('Tomorrow')" ng-class="{ 'day-selected': chosenDay === 'Tomorrow', 'day-option' : chosenDay!== 'Tomorrow'  }">TOMORROW</md-button>
+								<md-button style="" class="md-small" ng-click="daySelected('Weekend')" ng-class="{ 'day-selected': chosenDay === 'Weekend', 'day-option' : chosenDay!== 'Weekend'  }">WEEKEND</md-button>
+							</div>
+							<hr>
+							<div layout-gt-xs="row" layout-align="center center">
+								<md-button style="" class=" md-small" ng-click="filterTag('kids')" ng-class="tagCSS('kids')">KIDS</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('nightlife')" ng-class="tagCSS('nightlife')">NIGHTLIFE</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('health')" ng-class="tagCSS('health')">HEALTH</md-button>
+								<md-button style="" class=" md-small" ng-click="filterTag('music')" ng-class="tagCSS('music')">MUSIC</md-button>
+							</div>
+							<div layout-gt-xs="row" layout-align="center center">
+								<md-button style="" class="md-small" ng-click="filterTag('free')" ng-class="tagCSS('free')">FREE</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('dining')" ng-class="tagCSS('dining')">DINING</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('fashion')" ng-class="tagCSS('fashion')">FASHION</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('festivals')" ng-class="tagCSS('festivals')">FESTIVALS</md-button>
+							</div>
+							<div layout-gt-xs="row" layout-align="center center">
+								<md-button style="" class="md-small" ng-click="filterTag('performance')" ng-class="tagCSS('performance')">PERFORMANCE</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('art')" ng-class="tagCSS('art')">ART</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('book')" ng-class="tagCSS('book')">LECTURE</md-button>
+								<md-button style="" class="md-small" ng-click="filterTag('film')" ng-class="tagCSS('film')">FILM</md-button>
+							</div>							
+							<hr>
+							
+							
+							<md-input-container id="" class="md-block" flex-gt-xs style=" margin-top: 0px; margin-bottom:0px;  padding-bottom:0px">
+								<form id="searchForm">
+									<div layout-gt-xs="row" style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+										<i style="color:grey" class='material-icons'>search</i>
+										<md-input-container class="search" md-no-float class="md-block" flex style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+											<input size="3" style="border-bottom:none; font-size: 22px" type="text" id="searchBox" placeholder="filter..." ng-model="searchTxt" ng-change="searchChanged(searchTxt)" ng-model-options="{debounce : 600}">
+										</md-input-container>
+
+										<span style="color:grey"><md-button style="margin-bottom:20px;" class="md-icon-button" ng-click="sortByTime()"><i class="material-icons">access_time</i><md-tooltip md-direction="Bottom">sort by posted time</md-tooltip></md-button><md-button  style="margin-bottom:20px;" class="md-icon-button" ng-click="sortByLikes()"><i class="material-icons">favorite_border</i><md-tooltip md-direction="Bottom">sort by most liked</md-tooltip></md-button><md-button style="margin-bottom:20px;" class="md-icon-button" ng-click="sortByDistance()"><i class="material-icons">location_on</i><md-tooltip md-direction="Bottom">sort by distance</md-tooltip></md-button></span>
+									</div>
+								</form>
+							</md-input-container>
+											<hr>
+			
+							
+							<p>
+
+								<a href="/chicago">Chicago</a>
+								<a href="/sf">San Francisco</a>
+								<a href="/nyc">New York</a>
+								<a href="/la">Los Angeles</a>
+								<a href="/portland">Portland</a>
+								<a href="/austin">Austin</a>
+								<a href="/boston">Boston</a>
+								<a href="" ng-click="showLocations()"><i class="fa fa-search "></i>&nbsp;All Metros</a>
+
+							</p>
+							<!--md-menu>
+       			<md-button aria-label="Open phone interactions menu" class="md-button" ng-click="openMenu($mdOpenMenu, $event)">
+							{{ chosenDay }}<span class="caret"></span>
+						</md-button>
+						<md-menu-content width="40">				
+							<md-menu-item ng-repeat="day in dayList">
+          			<md-button ng-click="daySelected(day)">
+									{{ day }}
+          			</md-button>
+        			</md-menu-item>
+      			</md-menu-content>
+    			</md-menu-->
+
+
+
+
+							<!--div layout-gt-xs="row"><md-button class="md-icon-button md-warn md-raised"><i class='material-icons'>today</i></md-button><md-button class="md-icon-button"><i class='material-icons'>date_range</i></md-button><md-button class="md-icon-button"><i class='material-icons'>date_range</i></md-button></div-->
+
+							<!--h4 ng-show="itemsToday.length > 0" class="">Due Today</h4>
+				<div ng-repeat="assignment in assignmentList | filter: getItemsDueToday  | limitTo: 4   as itemsToday">
+					<span style="color:gray" class="">{{assignment.name}}</span>
+					<br/>
+				</div>			
+					
+					<h4 ng-show="itemsTomorrow.length > 0" class="">Due Tomorrow</h4>
+				<div ng-repeat="assignment in assignmentList | filter: getItemsDueTomorrow  | limitTo: 4 as itemsTomorrow ">
+					<span style="color:gray" class="">{{assignment.name}}</span>
+					<br/>
+				</div>
+					
+					<h4 ng-show="itemsNextDay.length > 0" class="">Due {{getDayTwoFromNow()}}</h4>
+				<div ng-repeat="assignment in assignmentList | filter: getItemsDueNextDay  | limitTo: 4 as itemsNextDay ">
+					<span style="color:gray" class="">{{assignment.name}}</span>
+					<br/>
+				</div-->
+
+						</md-card-content>
+					</md-card>
+
+					<!--md-card hide-xs>
+			<div class="panel" >
+				<md-content layout-gt-sm="row" layout="column">
+      <md-list flex>
+				        <md-list-item class="md-3-line"  ng-click="null">
+		          <div class="md-list-item-text" layout="column">
+							            <h2>Post Your Event</h2>
+            <h4>Just add #EVSTK to your event tweet</h4>
+            <p>Read the FAQs here</p>
+									</div>
+        </md-list-item>
+
+				</md-list>
+					</md-content>
+			</div><!--/panel--->
+					<!--/md-card-->
+					<md-card hide-sm hide-xs>
+<a style="margin:0; padding:0" href="https://twitter.com/intent/tweet?button_hashtag=EVSTK&text=Our%20great%20event%20is%20tomorrow%20at%208:30.%20%23kids" class="md-primary md-raised md-button "><md-icon style="margin-top:5px" class="fa fa-twitter"></md-icon>Post your event</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></md-card>
+
+
+
+				</div>
+				<!--/end 3 col width-->
+
+				<style>
+					@media (max-width: 600px) {
+						.col-md-7 {
+							padding: 0px;
+						}
+					}
+				</style>
+
+				<div class="col-md-7">
+					<!--search block-->
+
+
+
+
+
+					<md-card style="margin-bottom:30px">
+
+						<md-card-content id="demo" class="" style=" margin-bottom: 0px; padding-bottom: 0px">
+							<md-input-container id="" class="md-block" flex-gt-xs style=" margin-top: 0px; margin-bottom:0px;  padding-bottom:0px">
+								<form id="searchForm2" ng-keyup="$event.keyCode == 13 && goSearch(searchTxt2)">
+									<div layout-gt-xs="row" style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+										<div style="font-weight:bold; font-size:20px; color:grey;padding-top:2px"> Near</div>
+										<md-input-container class="search" md-no-float class="md-block" flex style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+											<input size="3" style="border-bottom:none; font-size: 22px" type="text" id="searchBox2" placeholder="Madison, WI" ng-model="searchTxt2"  ng-model-options="{debounce : 600}">
+										</md-input-container>
+
+										<span style="color:grey"><md-button style="margin-bottom:20px;" class="md-icon-button" ng-click="goSearch(searchTxt2)"><i style="color:grey" class='material-icons'>search</i><md-tooltip md-direction="Bottom">change location</md-tooltip></md-button></span>
+									</div>
+								</form>
+							</md-input-container>
+						</md-card-content>
+					</md-card>
+
+
+					<md-progress-circular md-mode="indeterminate" class="mid" ng-show="loading"></md-progress-circular>
+
+
+					<md-card ng-show="eventList.length == 0">
+						<md-card-title>
+							<md-card-title-text>Sorry, we don't have anything that matches that criteria. To post your event, tweet the description and include #EVSTK.
+							</md-card-title-text>
+						</md-card-title>
+					</md-card>
+
+					<div ng-repeat="pic in eventList track by $index">
+
+						<md-card >
+
+
+							<md-card-title style="padding-bottom:0">
+								<md-card-title-text ng-show="pic.eventurl">
+									<a ng-href="{{ pic.eventurl }}" target="_blank" class="md-headline" style="text-decoration:none;color:#23527c">{{pic.title ? pic.title : '@'+pic.screenname}}</a>{{pic.place }}
+								</md-card-title-text>
+								<md-card-title-text ng-show="!pic.eventurl">
+									<span class="md-headline" style="color:#23527c">{{pic.title ? pic.title : '@'+pic.screenname}}</span>{{pic.place }}
+								</md-card-title-text>
+								<md-card-title-media>
+									<div class="md-media-sm card-media" style="padding-top:10px; padding-left:30px; color: grey"> {{ pic.distance | number:1 }}mi</div>
+								</md-card-title-media>
+							</md-card-title>
+							<md-card-content>
+								<p style="margin-top:5px" ng-bind-html="pic.body | parseUrl"></p>
+							</md-card-content>
+							<md-card-content style="padding:0">
+							<img  style="width:100%" ng-show="pic.eventimage" ng-src="{{pic.eventimage}}" class="md-card-image" alt="no image">
+							</md-card-content>
+							<md-card-content style="padding:0">
+							<!--img  style="height={{pic.location.height}}px; width:{{pic.location.width}}px;" ng-show="!pic.eventimage && pic.locationimage" ng-src="{{pic.locationimage}}" class="md-card-image" alt="no image"-->
+							<img  style="max-width:100%; display: block; margin: 0 auto;" ng-show="!pic.eventimage && pic.locationimage" ng-src="{{pic.locationimage}}" class="md-card-image" alt="no image">
+							</md-card-content>
+
+							<md-card-actions layout="row" layout-sm="column" layout-align="end center" layout-wrap>
+								<div layout="row" layout-align="start center" flex>
+									<!--md-button class=" md-raised" style="margin-left:10px" ng-click="showAssignment($event)">visit site</md-button>    <span flex></span-->
+									<p style="margin-left:10px; color:grey">{{pic.eventdate | date:"EEE, MMM dd"}}</p>
+								</div>
+								<md-button class="md-icon-button" ng-click="updateLike(pic)" ng-class="{ 'md-warn': isLiked(pic) }">
+									<i class="material-icons">favorite</i>
+									<md-tooltip md-direction="Bottom">{{ pic.likes }}</md-tooltip>
+								</md-button>
+								<md-button class="md-icon-button" ng-click="!isAbuseFlagEnabled||updateAbuseFlagCount(pic)">
+									<i class="material-icons">flag</i>
+									<md-tooltip md-direction="Bottom">{{ pic.abuseFlagCount }}</md-tooltip>
+								</md-button>
+
+								<md-button class="md-icon-button" ng-click="cancel()">
+									<i class="material-icons">share_arrow</i>
+								</md-button>
+							</md-card-actions>
+
+
+
+
+
+
+							<!--md-toolbar style="background-color:#fff; color:black;">
+			<div class="md-toolbar-tools">
+					<md-button class="md-icon-button" ng-click="">
+						<i class="material-icons">{{assignment.isAnnouncement ? 'announcement' : 'assignment'}}</i>
+					</md-button>
+					<h2 class="hideOnMobile">{{pic.title ? pic.title : '@'+pic.screenname}}</h2>
+					<span flex></span>
+					<h4 ng-hide="assignment.isAnnouncement">						
+						<span class="hideOnMobile"> <span ng-class="{true:'bg-primary', false:'text-muted'}[isDueToday(assignment.due)]">{{ pic.distance | number:1 }}mi</span></span> </h4>
+					<md-button class="md-icon-button" ng-click="cancel()">
+						<i class="material-icons">more_vert</i>
+					</md-button>
+				</div>
+			</md-toolbar-->
+
+							<!--md-card-title ng-hide="assignment.isAnnouncement"-->
+							<!--md-card-title-text>
+					<!--span  class="md-headline"><a style="text-decoration:none; color:black" ng-href="/class/{{thisKlass._id}}/assignment/{{assignment._id}}/details">{{pic.title ? pic.title : '@'+pic.screenname}}</a>	</span-->
+							<!--span  class="md-subhead">{{pic.body}}</span-->
+							<!--span  class="md-headline">{{pic.body}}</span-->
+							<!--/md-card-title-text>
+				
+			</md-card-title>
+						<md-card-content>
+						<span flex>{{pic.body}}</span>
+						<md-button class="md-raised" ng-click="showAssignment($event)">Assign</md-button>
+					</md-card-content-->
+
+
+							<!--this is the OLD 'addcomment' panel-->
+							<!--div class="panel" style="border-bottom: 1px solid #e9eaec; margin-bottom: 0px;">
+					<div class="panel-body">
+						<input type="text" class="" ng-model="assignment.comments.content" data-toggle="collapse" placeholder="share with your class" data-target="{{ '#comment-' + $index }}" style="border:0px" name="commentText"></input>
+						<div id="{{ 'comment-' + $index }}" class="collapse">
+							<div class="panel">
+								<!-- button class="btn-primary pull-right" ng-click="assignment.comments.push({author: {firstName: fname}, content: assignment.comments.content}); addComment(assignment._id, assignment.comments.content); assignment.comments.content='';"-->
+							<!--button class="btn-primary pull-right" ng-click=" addComment(assignment._id, $index, assignment.comments.content); assignment.comments.content='';">
+											POST
+										</button>
+								<button class="btn-primary pull-right" ng-click="cancelComment()">
+											CANCEL
+										</button>
+							</div>
+						</div>
+					</div>
+				</div-->
+							<!--/close add comment-->
+
+
+
+							<!--/NEW add comment-->
+							<!--md-list-item class="md-1-line"   style="background-color:rgba(158,158,158,0.2)">
+					<span class="md-avatar"><ng-letter-avatar  height="40" width="40"  data={{fname}} shape="round"></ng-letter-avatar></span>
+
+					<form name="commentForm" ng-cloak style="min-width:70%">
+         		<md-input-container class="md-block"  md-no-float>
+            	<input ng-model="assignment.comments.content" placeholder="Add class comment..." name="com" ng-focus="isSearchFocused=true"  >
+          	</md-input-container>
+						<md-icon md-font-icon="material-icons" class="md-secondary" ng-click=" addComment(assignment._id, $index, assignment.comments.content); assignment.comments.content='';" style="padding-right:20px;" ng-show="isSearchFocused">done</md-icon>
+						<md-icon md-font-icon="material-icons" class="md-secondary" ng-click="cancelComment(); assignment.comments.content='';" style="padding-right:40px;" ng-show="isSearchFocused">cancel</md-icon>
+					</form>
+					<md-divider ></md-divider>
+	  		</md-list-item-->
+
+							<!--/close NEW add comment-->
+
+							<!--/ng repeat comments-->
+							<!--div ng-repeat="comment in assignment.comments track by $index">
+					<div class="panel" style="border-bottom: 1px solid #e9eaec; margin-bottom: 0px;">
+						<div class="panel-heading">{{comment.author.firstName}} posted {{comment.posted | date:"MM/dd 'at' h:mma"}}</div>
+						<div class="panel-body">{{comment.content}}</div>
+					</div>
+				</div-->
+							<!--/ng repeat comments-->
+
+							<!--/ng NEW repeat comments-->
+							<!--md-list-item class="md-3-line" ng-repeat="comment in assignment.comments | reverse track by $index  " >
+					<span class="md-avatar"><ng-letter-avatar  height="40" width="40"  data={{comment.author.firstName}} shape="round"></ng-letter-avatar></span>
+          <div class="md-list-item-text" layout="column">
+            <h3>{{comment.author.firstName}}</h3>
+            <h4>{{comment.posted | date:"MM/dd 'at' h:mma"}}</h4>
+            <p>{{ comment.content}}</p>
+          </div>
+				<md-divider ng-if="!$last"></md-divider>
+        </md-list-item-->
+							<!--/ng NEW repeat comments-->
+
+						</md-card>
+						<!--/close card--->
+					</div>
+					<!--/ng repeat assignments-->
+
+					<md-button ng-click="getMore()" class="md-primary md-raised" ng-show="eventList.length > 49">more</md-button>
+
+				</div>
+				<!--/grid of 8-->
+
+
+				<div class="col-md-1">
+					<!--div style="min-height: 90vh;"></div-->
+					<div id="floater">
+
+						<!-----------------------FAB--------------------------->
+						<!--md-button class="md-fab md-scale md-fab-bottom-right" aria-label="Eat cake" ng-click="showAssignment($event)">
+          <i class="material-icons wi">add</i>				
+        </md-button-->
+
+						<md-fab-speed-dial md-direction="up" class="md-scale md-fab-bottom-right">
+							<md-fab-trigger>
+								<md-button aria-label="menu" class="md-fab md-warn" ng-click="showAssignment($event)">
+									<i class="material-icons wi">add</i>
+								</md-button>
+							</md-fab-trigger>
+
+							<style>
+								md-fab-toolbar {
+									width: 100vw;
+								}
+							</style>
+
+							<!--md-fab-toolbar md-direction="left" class=" md-fab-bottom-right">
+    <md-fab-trigger class="align-with-text" >
+      <md-button  aria-label="menu" class="md-fab md-warn">
+          <md-icon class="material-icons wi">settings</md-icon>				
+      </md-button>
+    </md-fab-trigger>
+
+    <md-toolbar>
+      <md-fab-actions class="md-toolbar-tools">
+        <md-button aria-label="comment" class="md-icon-button">
+          <md-icon class="material-icons wi">today</md-icon>				
+        </md-button>
+        <md-button aria-label="label" class="md-icon-button">
+          <md-icon class="material-icons wi">filter_list</md-icon>				
+        </md-button>
+        <md-button aria-label="photo" class="md-icon-button">
+          <md-icon class="material-icons wi">add</md-icon>				
+        </md-button>
+      </md-fab-actions>
+    </md-toolbar>
+  </md-fab-toolbar-->
+
+
+							<!--md-fab-actions>
+					<md-button aria-label="Twitter" class="md-fab md-raised" ng-click="showAssignment($event)">
+						 <md-tooltip md-direction="left" md-visible="tooltipVisible" md-autohide="false">tweet your event</md-tooltip>
+						<i class="fa fa-twitter"></i>
+					</md-button>
+					<md-button aria-label="Facebook" class="md-fab md-raised " ng-click="showAnnouncement($event)">
+							 <md-tooltip md-direction="left" md-visible="tooltipVisible">create announcement</md-tooltip>
+          		<i class="material-icons wi">comment</i>				
+					</md-button>
+					<md-button aria-label="Facebook" class="md-fab md-raised " ng-click="showAnnouncement($event)">
+							 <md-tooltip md-direction="left" md-visible="tooltipVisible">question</md-tooltip>
+          		<i class="material-icons wi">live_help</i>				
+					</md-button>
+				</md-fab-actions-->
+
+							<!--/md-fab-speed-dial-->
+							<!-----------------------FAB--------------------------->
+					</div>
+					<!--floater?-->
+				</div>
+				<!--/col of 2-->
+
+			</div>
+			<!-- /.row -->
+
+		</div>
+		<!-- /.container -->
+
+		<script type="text/ng-template" id="myPopoverTemplate.html">
+			<!--div class="modal fade" id="Modal-2" tabindex="-1" role="dialog" aria-labelledby="Modal-label-2"-->
+			<div class="modal-dialog" role="document">
+				<!--div class="modal-content"-->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="Modal-label-1">{{ selectedEvent.title }}</h4>
+				</div>
+				<div class="modal-body">
+					<!--img src="images/demo/tourist3_small.jpg" alt="img01" class="img-responsive" /-->
+					<div class="modal-works"><span>{{ selectedEvent.tags }}</span></div>
+					<p ng-show="selectedEvent.cost">cost: {{ selectedEvent.cost }}</p>
+					<p>address: {{ selectedEvent.street }}</p>
+					<p>city: {{ selectedEvent.place }}</p>
+					<p ng-show="selectedEvent.phone">phone: {{ selectedEvent.phone }}</p>
+					<p ng-show="selectedEvent.eventurl">url: <a ng-href="{{ selectedEvent.eventurl }}">{{ selectedEvent.eventurl }}</a></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeModal()">Close</button>
+				</div>
+				<!--/div-->
+			</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="dialog.assignment.html">
+	<md-dialog aria-label="new assignment" flex="60">
+		<form ng-cloak>
+
+			<md-toolbar>
+				<div class="md-toolbar-tools">
+					<md-button class="md-icon-button" ng-click="">
+						<i class="material-icons">assignment</i>
+					</md-button>
+					<h2>Assignment</h2>
+					<span flex></span>
+					<md-button class="md-icon-button" ng-click="cancel()">
+						<i class="material-icons">close</i>
+					</md-button>
+				</div>
+			</md-toolbar>
+
+			<md-dialog-content>
+				<div class="md-dialog-content">
+					<h2>Create an assignment</h2>
+
+					<md-input-container class="md-block" flex-gt-xs>
+						<input ng-model="newAssignment.name" placeholder="name" ng-required="true">
+					</md-input-container>
+
+					<md-input-container class="md-block" flex-gt-xs>
+						<input ng-model="newAssignment.description" placeholder="description">
+					</md-input-container>
+
+					<md-input-container class="md-block" flex-gt-xs>
+						<md-datepicker ng-model="newAssignment.due" md-placeholder="Due date" md-open-on-focus ng-required="true"></md-datepicker>
+					</md-input-container>
+
+				</div>
+			</md-dialog-content>
+
+			<md-dialog-actions layout="row">
+
+				<span flex></span>
+				<md-button ng-click="cancel()">
+					Cancel
+				</md-button>
+				<md-button ng-click="goAssignment()">
+					Create
+				</md-button>
+			</md-dialog-actions>
+		</form>
+	</md-dialog>
+</script>
+
+
+<script type="text/ng-template" id="location.tmpl.html">
+	<md-dialog aria-label="Choose your city" flex="60">
+		<form ng-cloak>
+
+			<md-toolbar>
+				<div class="md-toolbar-tools">
+					<md-button class="md-icon-button" ng-click="">
+						<i class="material-icons">edit_location</i>
+					</md-button>
+					<span flex>Choose your metro area</span>
+					<md-button class="md-icon-button" ng-click="cancel()">
+						<i class="material-icons">close</i>
+					</md-button>
+				</div>
+			</md-toolbar>
+
+			<md-dialog-content>
+				<div class="md-dialog-content">
+					<h2></h2>
+
+					<md-grid-list md-cols-gt-md="5" md-cols-md="4" md-cols-sm="3" md-cols-xs="2" md-row-height="5:1" md-gutter-gt-md="16px" md-gutter-gt-sm="8px" md-gutter="4px">
+						<md-grid-tile ng-repeat="metro in metroList">
+							<md-button ng-click="goLocation(metro.shortname)">{{metro.metro}}</md-button>
+						</md-grid-tile>
+					</md-grid-list>
+
+
+
+				</div>
+			</md-dialog-content>
+
+			<md-dialog-actions layout="row">
+
+				<span flex></span>
+				<md-button ng-click="cancel()">
+					Cancel
+				</md-button>
+			</md-dialog-actions>
+		</form>
+	</md-dialog>
+</script>
+
+
+<script type="text/ng-template" id="dialog.announcement.html">
+	<md-dialog aria-label="new announcement" flex="60">
+		<form ng-cloak>
+
+			<md-toolbar>
+				<div class="md-toolbar-tools">
+					<md-button class="md-icon-button" ng-click="">
+						<i class="material-icons">comment</i>
+					</md-button>
+					<h2>Announcement</h2>
+					<span flex></span>
+					<md-button class="md-icon-button" ng-click="cancel()">
+						<i class="material-icons">close</i>
+					</md-button>
+				</div>
+			</md-toolbar>
+
+			<md-dialog-content>
+				<div class="md-dialog-content">
+					<h2>Create an announcement</h2>
+
+					<md-input-container class="md-block" flex-gt-xs>
+						<input ng-model="newAssignment.name" placeholder="announcement">
+					</md-input-container>
+
+
+
+				</div>
+			</md-dialog-content>
+
+			<md-dialog-actions layout="row">
+
+				<span flex></span>
+				<md-button ng-click="cancel()">
+					Cancel
+				</md-button>
+				<md-button ng-click="goAssignment()">
+					Create
+				</md-button>
+			</md-dialog-actions>
+		</form>
+	</md-dialog>
+</script>
+
+<script type="text/ng-template" id="filters.tmpl.html">
+
+	<md-dialog aria-label="new assignment" flex="60">
+
+		<md-toolbar>
+			<div class="md-toolbar-tools">
+				<md-button class="md-icon-button" ng-click="">
+					<i class="material-icons">assignment</i>
+				</md-button>
+				<h2>Filter options</h2>
+				<span flex></span>
+				<md-button class="md-icon-button" ng-click="cancel()">
+					<i class="material-icons">close</i>
+				</md-button>
+			</div>
+		</md-toolbar>
+
+		<md-dialog-content>
+			<div class="md-dialog-content">
+
+
+				<h3 ng-show="eventList.length===50">{{ eventList.length }}+ <span style="font-size: 16px; font-color: grey;">events near </span>{{chosenCity.split(',')[0]}}</h3>
+				<h3 ng-show="eventList.length!==50">{{ eventList.length }} <span style="font-size: 16px; font-color: grey;">events near </span>{{chosenCity.split(',')[0]}}</h3>
+				<a href="" ng-click="showLocations()">&nbsp;See List of Metro Areas</a>
+				<hr>
+				<div layout-gt-xs="row">
+					<md-button style="" ng-class="{ 'day-selected': chosenDay === 'Today', 'day-option' : chosenDay!== 'Today'  }" class=" md-small " ng-click="daySelectedPopup('Today')">TODAY</md-button>
+					<md-button style="" class="md-small" ng-click="daySelectedPopup('Tomorrow')" ng-class="{ 'day-selected': chosenDay === 'Tomorrow', 'day-option' : chosenDay!== 'Tomorrow'  }">TOMORROW</md-button>
+					<md-button style="" class="md-small" ng-click="daySelectedPopup('Weekend')" ng-class="{ 'day-selected': chosenDay === 'Weekend', 'day-option' : chosenDay!== 'Weekend'  }">WEEKEND</md-button>
+				</div>
+				<hr>
+				<div layout-gt-xs="row">
+					<md-button style="" class=" md-small" ng-click="filterTag('kids')" ng-class="tagCSS('kids')">KIDS</md-button>
+					<md-button style="" class="md-small" ng-click="filterTag('bars')" ng-class="tagCSS('bars')">BARS</md-button>
+					<md-button style="" class="md-small" ng-click="filterTag('health')" ng-class="tagCSS('health')">HEALTH</md-button>
+					<md-button style="" class=" md-small" ng-click="filterTag('music')" ng-class="tagCSS('music')">MUSIC</md-button>
+				</div>
+				<div layout-gt-xs="row">
+					<md-button style="" class="md-small" ng-click="filterTag('free')" ng-class="tagCSS('free')">FREE</md-button>
+					<md-button style="" class="md-small" ng-click="filterTag('culture')" ng-class="tagCSS('culture')">CULTURE</md-button>
+					<md-button style="" class="md-small" ng-click="filterTag('music')" ng-class="tagCSS('music')">MUSIC</md-button>
+					<md-button style="" class="md-small" ng-click="filterTag('festivals')" ng-class="tagCSS('festivals')">FESTIVALS</md-button>
+				</div>
+				<hr>
+				<p>
+					<a href="/chicago">Chicago</a>
+					<a href="/sf">San Francisco</a>
+					<a href="/nyc">New York</a>
+					<a href="/la">Los Angeles</a>
+					<a href="/portland">Portland</a>
+					<a href="/austin">Austin</a>
+					<a href="" ng-click="showLocations()">All Cities</a>
+
+				</p>
+
+
+			</div>
+		</md-dialog-content>
+	</md-dialog>
+
+</script>
+
+
+<script type="text/ng-template" id="dialog.addevent.html">
+	<md-dialog aria-label="new assignment" flex="60">
+		<form ng-cloak>
+
+			<md-toolbar>
+				<div class="md-toolbar-tools">
+					<md-button class="md-icon-button" ng-click="">
+						<i class="material-icons">assignment</i>
+					</md-button>
+					<h2>Coming Soon</h2>
+					<span flex></span>
+					<md-button class="md-icon-button" ng-click="cancel()">
+						<i class="material-icons">close</i>
+					</md-button>
+				</div>
+			</md-toolbar>
+
+			<md-dialog-content>
+				<div class="md-dialog-content">
+			<h2>We're working on this. Tweet #EVSTK until this is box is functional.</h2>
+			<h2>Create an Event</h2>
+
+					<md-input-container class="md-block" flex-gt-xs>
+						<input ng-model="newAssignment.name" placeholder="title" ng-required="true">
+					</md-input-container>
+
+					<md-input-container class="md-block" flex-gt-xs>
+						<input ng-model="newAssignment.description" placeholder="description">
+					</md-input-container>
+
+					<md-input-container class="md-block" flex-gt-xs>
+						<input ng-model="newAssignment.description" placeholder="address">
+					</md-input-container>
+
+					<md-input-container class="md-block" flex-gt-xs>
+						<input ng-model="newAssignment.description" placeholder="tags">
+					</md-input-container>
+
+					<md-input-container class="md-block" flex-gt-xs>
+						<md-datepicker ng-model="newAssignment.due" md-placeholder="Event date" md-open-on-focus ng-required="true"></md-datepicker>
+					</md-input-container>
+
+				</div>
+			</md-dialog-content>
+
+			<md-dialog-actions layout="row">
+
+				<span flex></span>
+				<md-button ng-click="cancel()">
+					Cancel
+				</md-button>
+				<md-button disabled ng-click="goAssignment()">
+					Post via Twitter..
+				</md-button>
+			</md-dialog-actions>
+		</form>
+	</md-dialog>
+</script>
+</md-content>
+</div>
