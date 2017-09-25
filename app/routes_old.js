@@ -434,7 +434,7 @@ module.exports = function(app, passport) {
           service: 'Gmail',
             auth: {
               user: "paul.millar@gmail.com",
-              pass: "ventura123"
+              pass: "XXXX"
             }
           });
           mailOpts = {
